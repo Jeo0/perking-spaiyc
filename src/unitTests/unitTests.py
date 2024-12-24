@@ -3,10 +3,11 @@
 
 # two choices
 from . import context  # choose this if u are compiling main.py only
-#import context  # chose this if u r compiling unitTests.py only
+#import context  # choose this if u r compiling unitTests.py only
 
 
 from dsa import qyu
+from dsa import bldgPark as bp
 from dsa import lanePark as lp
 from dsa import spacePark as sp
 
@@ -163,6 +164,19 @@ def lane_test():
         sdf +=1
 
     print(pogi[1].pop_vehicle())
+    print(pogi)
+
+def bldg_test():
+
+    pogi = bp.ParkBldg(5, 2);
+    print(pogi)
+    sdf = 66;
+    for lane in pogi:
+        for space in lane:
+            space.add_vehicle(chr(sdf))
+            sdf +=1
+
+    print(pogi[1][1].pop_vehicle())
     print(pogi)
 
 

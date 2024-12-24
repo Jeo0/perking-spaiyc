@@ -1,9 +1,11 @@
 from pyray import *
+from dsa import bldgPark as bp
 from dsa import lanePark as lp
 from dsa import spacePark as sp
 from unitTests import unitTests as tests
 
 if __name__ == "__main__":
+    tests.bldg_test();
 
 
 
