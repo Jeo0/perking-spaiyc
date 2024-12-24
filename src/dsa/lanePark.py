@@ -9,6 +9,15 @@ class ParkLane:
     def __repr__(self):
         return f'{self.lane}'
 
+    def __len__(self):
+        return len(self.lane)
+
+    def __iter__(self):
+        return iter(self.lane)
+
+    def __getitem__(self, index):
+        return self.lane[index]
+
 
     def randomize_pop(self, speed_multiplier):
 

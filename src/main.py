@@ -1,13 +1,11 @@
 from pyray import *
 from dsa import lanePark as lp
 from dsa import spacePark as sp
+from unitTests import unitTests as tests
 
 if __name__ == "__main__":
-    pogi = lp.ParkLane(5)
-    print(pogi)
 
-    what = sp.ParkSpace()
-    print(what)
+
 
     '''
     init_window(800, 450, "Hello")
