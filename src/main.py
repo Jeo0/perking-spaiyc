@@ -1,12 +1,14 @@
 from pyray import *
 from dsa import lanePark as lp
+from dsa import spacePark as sp
 
 if __name__ == "__main__":
     pogi = lp.ParkLane(5)
-    try:
-        print(pogi)
-    except IndexError:
-        print("cant, index error")
+    print(pogi)
+
+    what = sp.ParkSpace()
+    print(what)
+
     '''
     init_window(800, 450, "Hello")
     set_target_fps(1);

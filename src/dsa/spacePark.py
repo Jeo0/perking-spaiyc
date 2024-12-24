@@ -9,17 +9,16 @@ class ParkSpace:
     
     def __repr__(self):
         if self.__is_empty():
-            raise IndexError
-        else:
-            return f'{self.__stack[0]}';
+            return 'None'
+        return f'{self.__stack[0]}';
 
 
     def __is_empty(self) -> bool:
-        return self.__stack[0] == None
+        return len(self.__stack) == 0
 
 
     def __is_full(self) -> bool:
-        return self.__stack[0] != None
+        return len(self.__stack) == 1
 
 
     def add_vehicle(self, something) -> None:
