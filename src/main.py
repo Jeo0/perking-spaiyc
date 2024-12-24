@@ -1,6 +1,13 @@
 from pyray import *
+from dsa import lanePark as lp
 
 if __name__ == "__main__":
+    pogi = lp.ParkLane(5)
+    try:
+        print(pogi)
+    except IndexError:
+        print("cant, index error")
+    '''
     init_window(800, 450, "Hello")
     set_target_fps(1);
     while not window_should_close():
@@ -11,3 +18,4 @@ if __name__ == "__main__":
 
         end_drawing()
     close_window()
+    '''

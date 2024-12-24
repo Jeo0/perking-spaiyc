@@ -1,28 +1,32 @@
 
-class ParkBldg:
-    def __init__(self, length, width):
-        self.num_of_lanes: int = 0;
-
-
-class ParkLane:
-    def __init__(self):
-        self.
-
-    def randomize_alis(self, speed):
-        pass
-
-
-
 class ParkSpace:
     def __init__(self):
+        #self.__stack = [None];
         self.__stack = [];
         self.max_capacity = 1;
+        self.timer=0; # for the purposes of randomly being removed
+
+    
+    def __repr__(self):
+        if self.__is_empty():
+            raise IndexError
+        else:
+            return f'{self.__stack[0]}';
+
+
+    def __is_empty(self) -> bool:
+        return self.__stack[0] == None
+
+
+    def __is_full(self) -> bool:
+        return self.__stack[0] != None
 
 
     def add_vehicle(self, something) -> None:
         if self.__is_full():
             raise OverflowError
         else:
+            #self.__stack[0] = something
             self.__stack.append(something)
 
 
@@ -32,6 +36,7 @@ class ParkSpace:
         else:
             lastVal = self.__stack[-1]
 
+            #self.__stack[0] = None
             self.__stack.pop()
             return lastVal
     
@@ -43,15 +48,7 @@ class ParkSpace:
             return self.__stack[-1]
 
 
-    def __is_empty(self) -> bool:
-        return len(self.__stack) == 0
 
 
-    def __is_full(self) -> bool:
-        return len(self.__stack) == self.max_capacity
-
-
-    def __str__(self):
-        return f'{self.__stack}';
 
 
