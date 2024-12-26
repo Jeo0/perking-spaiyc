@@ -6,6 +6,7 @@ from . import context  # choose this if u are compiling main.py only
 #import context  # choose this if u r compiling unitTests.py only
 
 
+import pyray as rl
 from dsa import qyu
 from dsa import bldgPark as bp
 from dsa import lanePark as lp
@@ -168,7 +169,7 @@ def lane_test():
 
 def bldg_test():
 
-    pogi = bp.ParkBldg(5, 2);
+    pogi = bp.ParkBldg(5, 2, 800, 450);
     print(pogi)
     sdf = 66;
     for lane in pogi:
@@ -178,6 +179,47 @@ def bldg_test():
 
     print(pogi[1][1].pop_vehicle())
     print(pogi)
+
+
+def randomizedpop_test():
+    pogi = bp.ParkBldg(5, 2, 800, 450);
+    print(pogi)
+    sdf = 66;
+    for lane in pogi:
+        for space in lane:
+            space.add_vehicle(chr(sdf))
+            sdf +=1
+
+    print(pogi)
+
+    print("\n::regenerate")
+    for lane in pogi:
+        for space in lane:
+            space.regenerate_timeout()
+
+    print("::timeouts")
+    for lane in pogi:
+        for space in lane:
+            print(space.timeout, end=", ")
+
+        print()
+
+
+    # second phase
+    print("\n\npopping: ", pogi[1][1].pop_vehicle())
+    print(pogi)
+
+    print("\n::regenerate agian")
+    for lane in pogi:
+        for space in lane:
+            space.regenerate_timeout()
+
+    print("::timeouts")
+    for lane in pogi:
+        for space in lane:
+            print(space.timeout, end=", ")
+
+        print()
 
 
 

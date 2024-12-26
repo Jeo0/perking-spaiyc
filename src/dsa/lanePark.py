@@ -19,17 +19,5 @@ class ParkLane:
         return self.lane[index]
 
 
-    def randomize_pop(self, speed_multiplier):
-
-        import datetime
-        starttime = datetime.datetime.now()
-        x=0
-        for i in range(100000):
-            x+=i
-        endtime = datetime.datetime.now()
-        diff = endtime - starttime
-        print('Job took: ', diff.days, diff.seconds, diff.microseconds)
-
-
 
 
