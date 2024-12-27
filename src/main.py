@@ -1,14 +1,15 @@
 import pyray as rl
-#import ctypes   # used only for time_multiplier
 from dsa import bldgPark as bp
 from dsa import lanePark as lp
 from dsa import spacePark as sp
 from dsa import qyu 
-from unitTests import unitTests as tests
+from unitTests import unitTests as tests # call it from the main function
+import routines
 import time
 
 
 if __name__ == "__main__":
+    tests.lane_test()
 
     # window context
     default_screenwidth = int(800*1.9);
@@ -19,164 +20,50 @@ if __name__ == "__main__":
     SCREENHEIGHT = rl.get_screen_height();
 
     font_size = 25;
-    start_time = time.time();
-    elapsed_time = 0;
     
+
     # calculating rectangles
     num_parkspaces = 5;
     num_parklanes = 2;
 
+
     # objects 
-    pogi = bp.ParkBldg(num_parklanes, num_parkspaces, SCREENWIDTH, SCREENHEIGHT);
+    SM_dasma = bp.ParkBldg(num_parklanes, num_parkspaces, SCREENWIDTH, SCREENHEIGHT);
     waiting = qyu.Queue();
     time_multiplier = rl.ffi.new('float *', 1.0);
-    get_time_multiplier = 0.0; # use this one when doing operations
-    random_button_setter_forthe_secondsecond = rl.Rectangle(SCREENWIDTH // 2 + 200, SCREENHEIGHT // 2 + 100);
+    lastframe_time = time.time(); # used for calculating delta time
 
 
 
-
+    """ MAIN LOOP """
     while not rl.window_should_close():
-
-        # update
-        
-        
+        # for interface
+        shift_y = 50; 
 
 
-        #########################################
-        rl.begin_drawing()
-
-        rl.clear_background(rl.WHITE)
-
-        #####################################################
-        """ GAME 
-            MISMONG PARKING LOT """
-        # draw the parking spaces
-        # do draw the status also by adjusting the opacity and color
-        for lane in range(len(pogi)):
-            for space in range(len(pogi[lane])):
-                x_pos = 10 + ((pogi.gap_width + pogi.indiv_space_width) * space)
-                y_pos = 10 + ((pogi.gap_height + pogi.indiv_space_height) * lane)
-
-                if pogi[lane][space].is_empty():
-                    rl.draw_rectangle(x_pos, y_pos, 
-                                      pogi.indiv_space_width, pogi.indiv_space_height, 
-                                      rl.fade(rl.GREEN, .8))
-                else:
-                    rl.draw_rectangle(x_pos, y_pos, 
-                                      pogi.indiv_space_width, pogi.indiv_space_height, 
-                                      rl.fade(rl.MAROON, .8))
-                # print timeout
-                rl.draw_text(str(pogi[lane][space].timeout), x_pos, y_pos, font_size, rl.BLACK)
+        # updating the removal
+        current_time = time.time();
+        delta_time = current_time - lastframe_time; # time passed from last fram
+        lastframe_time = current_time
 
 
-        #####################################################
-        """ INTERFACE """
-        shift_y = 50;
-        # interface bg
-        rl.draw_rectangle(int(SCREENWIDTH * 0.7), 
-                          int(0), 
-                          int(SCREENWIDTH*1 - SCREENWIDTH*.7),
-                          int(SCREENHEIGHT), 
-                          rl.fade(rl.LIGHTGRAY, 0.7))
-
-        # queue
-        text_Que = f"Queue: {waiting.size}"
-        text_Que_size = rl.measure_text(text_Que, font_size)
-        text_Que_x = int((SCREENWIDTH ) * 0.802);
-        text_Que_y = int((SCREENHEIGHT - font_size) * 0.186) + shift_y;
-
-        rl.draw_text(text_Que, text_Que_x, text_Que_y, font_size, rl.DARKGRAY)
-
-        # available space
-        # calculate how many space are available
-        avail_space = 0;
-        for lane in pogi:
-            for space in lane:
-                if not space.is_empty() : avail_space+=1;
-        text_AvailSpace = f"Available Space: {avail_space}"
-        text_AvailSpace_size = rl.measure_text(text_AvailSpace, font_size)
-        text_AvailSpace_x = int((SCREENWIDTH ) * 0.744) + 35;
-        text_AvailSpace_y = int((SCREENHEIGHT - font_size) * 0.257)   + shift_y;
-
-        rl.draw_text(text_AvailSpace, text_AvailSpace_x, text_AvailSpace_y, font_size, rl.DARKGRAY)
-
-
-        # time multiplier slider
-        rec_time = rl.Rectangle(int(SCREENWIDTH * .763), 
-                                   int(SCREENHEIGHT* .393)+shift_y,
-                                   int(SCREENWIDTH * 0.94 - SCREENWIDTH * 0.763),
-                                   int(SCREENHEIGHT* .481 - SCREENHEIGHT* .373))
-
-        get_time_multiplier = time_multiplier[0]; # access it
-        text_TimeMultiplier = f"Time Multiplier: {get_time_multiplier:0.1f}";
-        text_TimeMultiplier_x = int((SCREENWIDTH ) * .776) ;
-        text_TimeMultiplier_y = int((SCREENHEIGHT - font_size-10) * 0.373) + shift_y;
-        rl.draw_text(text_TimeMultiplier, 
-                     text_TimeMultiplier_x,
-                     text_TimeMultiplier_y,
-                     font_size,
-                     rl.DARKGRAY)
-        rl.gui_slider_bar(rec_time,
-                          "", "",
-                          time_multiplier,
-                          .0,
-                          10.)
-
-        # add vehicle button
+        # for the add vehicle button
+        # i dont know how to separate this
         text_addvehicle = "Add a vehicle to Queue"
         rec_addvehicle= rl.Rectangle(int(SCREENWIDTH * .763), 
                                    int(SCREENHEIGHT* .514)+shift_y,
                                    int(SCREENWIDTH * 0.94 - SCREENWIDTH * 0.763),
                                    int(SCREENHEIGHT* .615 - SCREENHEIGHT* .514))
-
-        """ i dont know how to separate the draw from the game logic here """
-        if rl.gui_button(rec_addvehicle, text_addvehicle): 
-            #car = gen.generate_vehicle();
-
-
-            # bruteforce searching through the parkbldg
-            # if it is empty, then park there then start the individual timer
-            flagBreak = False;
-            counterSpaceThatIsFull= 0;
-            for lane in pogi:
-                for space in lane:
-
-                    # add if space is free
-                    if space.is_empty():
-                        # decide whether to add from queue or not
-                        if waiting.size:
-                            space.add_vehicle(waiting.dequeue)
-                        else:
-                            space.add_vehicle("ASd")
-                        flagBreak = True;
-                        break;
-
-                    # else counter for queue
-                    else:
-                        counterSpaceThatIsFull +=1
-
-                # catch here for the previous flagbreak
-                # to early break and also reset
-                if flagBreak:
-                    flagBreak = False # reset
-                    break;
-
-            # add it to queue
-            # check if counter is greater than 2 * 5
-            if counterSpaceThatIsFull >= len(pogi) * len(pogi[0]):
-                waiting.enqueue("wasd");
+        button_add_vehicle = rl.gui_button(rec_addvehicle, text_addvehicle)
 
 
 
-        # DEBUG PRINTING CONTENST OF PARKbldg
-        print(pogi)
+        # routines
+        routines.update_routine(SM_dasma, waiting, delta_time, time_multiplier, button_add_vehicle)
 
+        routines.draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y,
+                              SM_dasma, waiting, time_multiplier, text_addvehicle, rec_addvehicle)
 
-
-
-
-        # reset
         rl.end_drawing()
 
     rl.close_window()

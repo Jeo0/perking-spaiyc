@@ -155,20 +155,31 @@ def lane_test():
     C
     [B, None, D, E, F]
     """
-
     pogi = lp.ParkLane(5)
     print(pogi)
 
+    # populate the pogi
     sdf = 66;
     for ii in pogi:
         ii.add_vehicle(chr(sdf))
         sdf +=1
 
+    # try removing the 1st index:
+    #for space in pogi:
     print(pogi[1].pop_vehicle())
+
+    # count how many nalang natitira
+    # should present only 4
+    counter = 0;
+    for space in pogi:
+        if not space.is_empty():
+            counter+=1
+    print(f"\n\ncOUNTER: {counter}")
     print(pogi)
+    print("\n\n")
+
 
 def bldg_test():
-
     pogi = bp.ParkBldg(5, 2, 800, 450);
     print(pogi)
     sdf = 66;

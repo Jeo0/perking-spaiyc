@@ -4,7 +4,9 @@ class ParkSpace:
     def __init__(self):
         self.__stack = [];
         self.max_capacity = 1;
-        self.timeout: float = 0; # for the purposes of randomly being removed
+
+        # arbitrary big negative number, and -100.0 is more than enough
+        self.timeout: float = -100.0; # for the purposes of randomly being removed
 
     
     def __repr__(self):
@@ -57,14 +59,15 @@ class ParkSpace:
     def regenerate_timeout(self) -> None:
         """  Generates 5 to 30 numbers (treated as seconds)
              update the self.timeout to this generated number
-             if it is full, else set it to 0
+             if it is full, else set it to -100.0
             
         """
         from random import randrange
         if self.__is_full():
             self.timeout = randrange(5,30+1)
         else:
-            self.timeout = 0
+            self.timeout = -100.
+
 
 
 
