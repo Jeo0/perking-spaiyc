@@ -1,0 +1,20 @@
+input:
+- add vehicle 16 times
+- wait until few parking lot remains
+
+output:
+- see the green parking spots become red
+- see the queue grow and available spots shrink
+
+
+
+input:
+- add vehicle randomly
+- play with time multiplier
+
+output:
+- see faster and slower operations 
+
+
+
+
