@@ -1,15 +1,14 @@
+note for more advanced users (not a mandatory procedure):
+u can use conda to handle the python and pip installation
+look into https://docs.anaconda.com/miniconda/install/
+
+
 
 ####################################################################
 #############                                     ##################
 #############      INSTALLATION INSTRUCTIONS      ##################
 #############                                     ##################
 ####################################################################
-
-note for more advanced users (not a mandatory procedure):
-u can use conda to handle the python and pip installation
-look into https://docs.anaconda.com/miniconda/install/
-
-
 
 # this is referenced from : https://electronstudio.github.io/raylib-python-cffi/README.html#installation
 
@@ -36,9 +35,28 @@ if windows: https://www.python.org/downloads/windows/
 		python -m pip install raylib==5.5.0.0
 
 
-3. with the zip project extracted on your desktop or anywhere you want, navigate into the src folder with the Change Drive command (cd):
+
+
+
+
+
+####################################################################
+#############                                     ##################
+#############           GETTING STARTED           ##################
+#############                                     ##################
+####################################################################
+
+1. with the zip project extracted on your desktop or anywhere you want, navigate into the src folder with the Change Directory command (cd):
 	cd "Path\To\Your\Desktop\or\anywhere\you\want\ProjectFolder\src\"
 
-
-4. run this command to run the game:
+2. run this command to run the game:
 	python main.py
+
+
+
+
+####################################################################
+Note to professor:
+All commits past the 16th does not reflect with wat I have passed to you. To continue the things that I wanted to see, I resumed pushing features. 
+
+For better distinction, all future commits will be labeled as "pogi" by prefix.

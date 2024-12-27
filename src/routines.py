@@ -74,7 +74,7 @@ def update_routine(SM_dasma, waiting, delta_time, time_multiplier, button_add_ve
 
 
 
-def draw_routine(custom_font, SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waiting, time_multiplier, text_addvehicle, rec_addvehicle) -> None:
+def draw_routine(custom_font, SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waiting, time_multiplier, text_addvehicle, rec_addvehicle, flagDrawTimeOut) -> None:
     """ WARNING, many of these values are hardcoded and calculated iteratively
         
         This function has no logic except the time_multiplier being modified in here using the slider
@@ -121,8 +121,8 @@ def draw_routine(custom_font, SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_
             spacing = 2
             
             # final change
-            # if flagDrawTimeOut: """ nevermind """
-            rl.draw_text_ex(custom_font, text_timeout+"sec", (x_pos, y_pos), font_size, spacing, rl.BLACK);
+            if flagDrawTimeOut[0]: 
+                rl.draw_text_ex(custom_font, text_timeout+"sec", (x_pos, y_pos), font_size, spacing, rl.BLACK);
 
             # print the platenumber also
             rl.draw_text_ex(custom_font, str(SM_dasma[lane][space]), (x_pos+12, y_pos + 72), font_size-5, spacing, rl.BLACK);
