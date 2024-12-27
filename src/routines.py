@@ -5,7 +5,6 @@ from dsa import lanePark as lp
 from dsa import spacePark as sp
 from dsa import qyu 
 from unitTests import unitTests as tests # call it from the main function
-import routines
 import time
 
 
@@ -41,7 +40,6 @@ def update_routine(SM_dasma, waiting, delta_time, time_multiplier, button_add_ve
 
     """ BUTTON ADD VEHICLE LOGIC """
     if button_add_vehicle:
-        #car = gen.generate_vehicle();
 
         # bruteforce searching through the parkbldg
         # if it is empty, then park there then start the individual timer
@@ -121,7 +119,10 @@ def draw_routine(custom_font, SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_
             else:
                 text_timeout = f"{SM_dasma[lane][space].timeout:.1f}"
             spacing = 2
-            #rl.draw_text_ex(custom_font, text_timeout, x_pos, y_pos, font_size, rl.BLACK);
+            
+            # final change
+            # if flagDrawTimeOut: """ nevermind """
+            rl.draw_text_ex(custom_font, text_timeout+"sec", (x_pos, y_pos), font_size, spacing, rl.BLACK);
 
             # print the platenumber also
             rl.draw_text_ex(custom_font, str(SM_dasma[lane][space]), (x_pos+12, y_pos + 72), font_size-5, spacing, rl.BLACK);
@@ -182,6 +183,9 @@ def draw_routine(custom_font, SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_
 
     # 6. add vehicle button
     rl.gui_button(rec_addvehicle, text_addvehicle)
+
+
+
 
     # DEBUG PRINTING CONTENST OF PARKbldg
     # print(SM_dasma)

@@ -9,6 +9,7 @@ import time
 
 
 if __name__ == "__main__":
+    tests.randomizedpop_test()
 
     # window context
     default_screenwidth = int(800*1.9);
@@ -32,6 +33,7 @@ if __name__ == "__main__":
     waiting = qyu.Queue();
     time_multiplier = rl.ffi.new('float *', 1.0);
     lastframe_time = time.time(); # used for calculating delta time
+    # flagDrawTimeOut = rl.ffi.new('bool *', False); """ nevermind """
 
 
 
@@ -63,6 +65,12 @@ if __name__ == "__main__":
 
         routines.draw_routine(custom_font, SCREENWIDTH, SCREENHEIGHT, font_size, shift_y,
                               SM_dasma, waiting, time_multiplier, text_addvehicle, rec_addvehicle)
+
+        """ ENVERMIND
+        # 7. draw timeout toggle button
+        if rl.gui_check_box(rl.Rectangle(SCREENWIDTH - 280, SCREENHEIGHT - 240 , 30, 30), "Show timeout", flagDrawTimeOut): 
+            flagDrawTimeOut[0] = not flagDrawTimeOut[0]
+        """
 
         rl.end_drawing()
 
