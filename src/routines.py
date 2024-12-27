@@ -76,7 +76,7 @@ def update_routine(SM_dasma, waiting, delta_time, time_multiplier, button_add_ve
 
 
 
-def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waiting, time_multiplier, text_addvehicle, rec_addvehicle) -> None:
+def draw_routine(custom_font, SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waiting, time_multiplier, text_addvehicle, rec_addvehicle) -> None:
     """ WARNING, many of these values are hardcoded and calculated iteratively
         
         This function has no logic except the time_multiplier being modified in here using the slider
@@ -91,11 +91,19 @@ def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waitin
     #####################################################
     """ PARKING BUILDING
         MISMONG PARKING LOT """
-    # 1. draw the parking spaces
+    # 1. draw the bldg
+    rl.draw_rectangle(30,       30,         653+30,        569, rl.fade(rl.LIGHTGRAY, 0.34))  # background
+    rl.draw_rectangle(30,       30,         653,        30, rl.GRAY)  # top
+    rl.draw_rectangle(30,       60,         30,         569, rl.GRAY)  # left
+    rl.draw_rectangle(30,       569+30,     653,        30, rl.GRAY)  # top
+    rl.draw_rectangle(30+653,   30,         30,         210, rl.GRAY)  # entrance top
+    rl.draw_rectangle(30+653,   30+210+179,         30,         210, rl.GRAY)  # entrance bot
+
+    # also draw the parking spaces
     for lane in range(len(SM_dasma)):
         for space in range(len(SM_dasma[lane])):
-            x_pos = 10 + ((SM_dasma.gap_width + SM_dasma.indiv_space_width) * space)
-            y_pos = 10 + ((SM_dasma.gap_height + SM_dasma.indiv_space_height) * lane)
+            x_pos = 60 + int((SM_dasma.gap_width + SM_dasma.indiv_space_width) * space * 1)
+            y_pos = 60 + int((SM_dasma.gap_height + SM_dasma.indiv_space_height) * lane * 2.)
 
             # draw the status if current space is empty or not
             if SM_dasma[lane][space].is_empty():
@@ -106,15 +114,17 @@ def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waitin
                 rl.draw_rectangle(x_pos, y_pos, 
                                   SM_dasma.indiv_space_width, SM_dasma.indiv_space_height, 
                                   rl.fade(rl.MAROON, .8))
-            # print timeout
+
+            # DEBUG print timeout
             if SM_dasma[lane][space].timeout < 0:
                 text_timeout = str(0)
             else:
                 text_timeout = f"{SM_dasma[lane][space].timeout:.1f}"
-            rl.draw_text(text_timeout, x_pos, y_pos, font_size, rl.BLACK);
+            spacing = 2
+            #rl.draw_text_ex(custom_font, text_timeout, x_pos, y_pos, font_size, rl.BLACK);
 
             # print the platenumber also
-            rl.draw_text(str(SM_dasma[lane][space]), x_pos, y_pos + 50, font_size, rl.BLACK);
+            rl.draw_text_ex(custom_font, str(SM_dasma[lane][space]), (x_pos+12, y_pos + 72), font_size-5, spacing, rl.BLACK);
 
 
 
@@ -135,7 +145,7 @@ def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waitin
     text_Que_x = int((SCREENWIDTH ) * 0.802);
     text_Que_y = int((SCREENHEIGHT - font_size) * 0.186) + shift_y;
 
-    rl.draw_text(text_Que, text_Que_x, text_Que_y, font_size, rl.DARKGRAY)
+    rl.draw_text_ex(custom_font, text_Que, (text_Que_x, text_Que_y), font_size, spacing, rl.DARKGRAY)
 
 
     # 4. available space
@@ -149,7 +159,7 @@ def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waitin
     text_AvailSpace_size = rl.measure_text(text_AvailSpace, font_size)
     text_AvailSpace_x = int((SCREENWIDTH ) * 0.744) + 35;
     text_AvailSpace_y = int((SCREENHEIGHT - font_size) * 0.257)   + shift_y;
-    rl.draw_text(text_AvailSpace, text_AvailSpace_x, text_AvailSpace_y, font_size, rl.DARKGRAY)
+    rl.draw_text_ex(custom_font, text_AvailSpace, (text_AvailSpace_x, text_AvailSpace_y), font_size, spacing, rl.DARKGRAY)
 
 
     # 5. time multiplier slider
@@ -161,11 +171,7 @@ def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waitin
     text_TimeMultiplier = f"Time Multiplier: {time_multiplier[0]:0.1f}";
     text_TimeMultiplier_x = int((SCREENWIDTH ) * .776) ;
     text_TimeMultiplier_y = int((SCREENHEIGHT - font_size-10) * 0.373) + shift_y;
-    rl.draw_text(text_TimeMultiplier, 
-                 text_TimeMultiplier_x,
-                 text_TimeMultiplier_y,
-                 font_size,
-                 rl.DARKGRAY)
+    rl.draw_text_ex(custom_font, text_TimeMultiplier, (text_TimeMultiplier_x, text_TimeMultiplier_y), font_size, spacing, rl.DARKGRAY)
     rl.gui_slider_bar(rec_time,
                       "", "",
                       time_multiplier,
@@ -178,4 +184,4 @@ def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waitin
     rl.gui_button(rec_addvehicle, text_addvehicle)
 
     # DEBUG PRINTING CONTENST OF PARKbldg
-    print(SM_dasma)
+    # print(SM_dasma)

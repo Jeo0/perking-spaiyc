@@ -9,17 +9,17 @@ import time
 
 
 if __name__ == "__main__":
-    tests.lane_test()
 
     # window context
     default_screenwidth = int(800*1.9);
     default_screenheight = int(450*1.9);
-    rl.init_window(default_screenwidth, default_screenheight, "Hello")
+    rl.init_window(default_screenwidth, default_screenheight, "PARKING LOT IN DASMA")
     rl.set_target_fps(24);
     SCREENWIDTH = rl.get_screen_width();
     SCREENHEIGHT = rl.get_screen_height();
 
     font_size = 25;
+    custom_font = rl.load_font("font-calibri/calibri-regular.ttf")
     
 
     # calculating rectangles
@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
         # for the add vehicle button
         # i dont know how to separate this
-        text_addvehicle = "Add a vehicle to Queue"
+        text_addvehicle = "Add a vehicle\nto Queue"
         rec_addvehicle= rl.Rectangle(int(SCREENWIDTH * .763), 
                                    int(SCREENHEIGHT* .514)+shift_y,
                                    int(SCREENWIDTH * 0.94 - SCREENWIDTH * 0.763),
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         # routines
         routines.update_routine(SM_dasma, waiting, delta_time, time_multiplier, button_add_vehicle)
 
-        routines.draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y,
+        routines.draw_routine(custom_font, SCREENWIDTH, SCREENHEIGHT, font_size, shift_y,
                               SM_dasma, waiting, time_multiplier, text_addvehicle, rec_addvehicle)
 
         rl.end_drawing()
