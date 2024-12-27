@@ -14,6 +14,11 @@ class ParkSpace:
             return 'None'
         return f'{self.get_vehicle()}';
 
+    def __str__(self):
+        if self.is_empty():
+            return ''
+        return f'{self.get_vehicle()}';
+
 
     def __getitem__(self):
         if self.is_empty():

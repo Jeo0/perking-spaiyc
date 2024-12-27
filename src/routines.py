@@ -11,7 +11,15 @@ import time
 
 
 def update_routine(SM_dasma, waiting, delta_time, time_multiplier, button_add_vehicle) -> None:
-    """ This function has 4 responsibilities """
+    """ This function has 5 responsibilities """
+
+    """ Generate random number """
+    from random import randrange
+    plate_number = randrange(1000, 9999)
+    plate_text = [chr(randrange(65, 90+1)) for _ in range(3)] # ascii from A -> Z; 
+    final_plate = ''.join(plate_text) + '-' + str(plate_number)
+    # also there should be 3 letters
+
 
     """ 3 THINGS IN THIS LOOP """
     for lane in SM_dasma:
@@ -44,7 +52,7 @@ def update_routine(SM_dasma, waiting, delta_time, time_multiplier, button_add_ve
 
                 # add if space is free
                 if space.is_empty():
-                    space.add_vehicle("ASd")
+                    space.add_vehicle(final_plate);
 
                     flagAddedVehicle = True;
                     break;
@@ -60,7 +68,7 @@ def update_routine(SM_dasma, waiting, delta_time, time_multiplier, button_add_ve
 
         # add it to queue if there were no added vehicle
         if not flagAddedVehicle:
-            waiting.enqueue("wasd");
+            waiting.enqueue(final_plate);
 
 
 
@@ -103,7 +111,10 @@ def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waitin
                 text_timeout = str(0)
             else:
                 text_timeout = f"{SM_dasma[lane][space].timeout:.1f}"
-            rl.draw_text(text_timeout, x_pos, y_pos, font_size, rl.BLACK)
+            rl.draw_text(text_timeout, x_pos, y_pos, font_size, rl.BLACK);
+
+            # print the platenumber also
+            rl.draw_text(str(SM_dasma[lane][space]), x_pos, y_pos + 50, font_size, rl.BLACK);
 
 
 
@@ -167,4 +178,4 @@ def draw_routine(SCREENWIDTH, SCREENHEIGHT, font_size, shift_y, SM_dasma, waitin
     rl.gui_button(rec_addvehicle, text_addvehicle)
 
     # DEBUG PRINTING CONTENST OF PARKbldg
-    # print(SM_dasma)
+    print(SM_dasma)
