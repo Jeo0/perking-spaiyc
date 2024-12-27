@@ -1,0 +1,7 @@
+input:
+4
+2
+4
+
+output:
+byebye byebye byebye byebye
