@@ -33,6 +33,7 @@ class ParkSpace:
             raise OverflowError
         else:
             self.__stack.append(something)
+            self.regenerate_timeout() # make the timeout random
 
 
     def pop_vehicle(self):
@@ -42,6 +43,7 @@ class ParkSpace:
             lastVal = self.__stack[0]
 
             self.__stack.pop()
+            self.regenerate_timeout() # make the timeout 0
             return lastVal
     
 

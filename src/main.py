@@ -38,12 +38,19 @@ if __name__ == "__main__":
 
     while not rl.window_should_close():
 
+        # update
+        
+        
+
 
         #########################################
         rl.begin_drawing()
 
         rl.clear_background(rl.WHITE)
 
+        #####################################################
+        """ GAME 
+            MISMONG PARKING LOT """
         # draw the parking spaces
         # do draw the status also by adjusting the opacity and color
         for lane in range(len(pogi)):
@@ -59,6 +66,8 @@ if __name__ == "__main__":
                     rl.draw_rectangle(x_pos, y_pos, 
                                       pogi.indiv_space_width, pogi.indiv_space_height, 
                                       rl.fade(rl.MAROON, .8))
+                # print timeout
+                rl.draw_text(str(pogi[lane][space].timeout), x_pos, y_pos, font_size, rl.BLACK)
 
 
         #####################################################
@@ -126,19 +135,38 @@ if __name__ == "__main__":
             #car = gen.generate_vehicle();
 
 
-            # searching through the parkbldg
+            # bruteforce searching through the parkbldg
             # if it is empty, then park there then start the individual timer
-            breakflag = False;
+            flagBreak = False;
+            counterSpaceThatIsFull= 0;
             for lane in pogi:
                 for space in lane:
+
+                    # add if space is free
                     if space.is_empty():
-                        space.add_vehicle("ASd")
-                        breakflag = True;
+                        # decide whether to add from queue or not
+                        if waiting.size:
+                            space.add_vehicle(waiting.dequeue)
+                        else:
+                            space.add_vehicle("ASd")
+                        flagBreak = True;
                         break;
 
-                if breakflag:
-                    breakflag = False # reset
+                    # else counter for queue
+                    else:
+                        counterSpaceThatIsFull +=1
+
+                # catch here for the previous flagbreak
+                # to early break and also reset
+                if flagBreak:
+                    flagBreak = False # reset
                     break;
+
+            # add it to queue
+            # check if counter is greater than 2 * 5
+            if counterSpaceThatIsFull >= len(pogi) * len(pogi[0]):
+                waiting.enqueue("wasd");
+
 
 
         # DEBUG PRINTING CONTENST OF PARKbldg
